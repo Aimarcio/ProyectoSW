@@ -24,7 +24,7 @@
 			if(empty($_POST["contraseña"])){
 				die('Error: Contraseña vacia');
 			}
-			$link = mysqli_connect("localhost", "id14879003_aimarcio", "hrYc7@vR^+DuSNxd", "id14879003_quiz");
+			$link = mysqli_connect("localhost", "id14879003_aimarcio", "", "id14879003_quiz");
 			$sql="Select * From usuarios Where email = '$_POST[email]' and password = '$_POST[contraseña]'";
 			$result= mysqli_query($link,$sql);
 			$row = mysqli_num_rows($result);

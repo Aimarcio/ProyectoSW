@@ -8,7 +8,7 @@
   <section class="main" id="s1">
     <div>
 		<?php
-		$mysqli = mysqli_connect("localhost", "id14879003_aimarcio", "hrYc7@vR^+DuSNxd", "id14879003_quiz");
+		$mysqli = mysqli_connect("localhost", "id14879003_aimarcio", "", "id14879003_quiz");
 		echo '<table>';
 		echo '<tr><th>Preguntas</th></tr>';
 		echo '<tr><td>Id</td><td>Email</td><td>Preguntas</td><td>Respuesta correcta</td><td>Respuesta incorrecta 1</td><td>Respuesta incorrecta 2</td><td>Respuesta incorrecta 3</td><td>Dificultad</td><td>Tema</td></tr>';

@@ -55,7 +55,7 @@
 			die('Error: Las contraseñas no coinciden');
 		}
 		
-		$link = mysqli_connect("localhost", "id14879003_aimarcio", "hrYc7@vR^+DuSNxd", "id14879003_quiz");
+		$link = mysqli_connect("localhost", "id14879003_aimarcio", "", "id14879003_quiz");
 		$sql="INSERT INTO `usuarios` ( `email`, `nombre`, `apellido`, `apellido 2`, `password`) VALUES('$_POST[email]','$_POST[nombre]','$_POST[apellido1]','$_POST[apellido2]','$_POST[contraseña]')";
 		if (!mysqli_query($link ,$sql))
 		{

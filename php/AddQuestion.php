@@ -41,7 +41,7 @@
 			die('Error: Dificultad vacia');
 			
 		}
-		$link = mysqli_connect("localhost", "id14879003_aimarcio", "hrYc7@vR^+DuSNxd", "id14879003_quiz");
+		$link = mysqli_connect("localhost", "id14879003_aimarcio", "", "id14879003_quiz");
 		$sql="INSERT INTO `preguntas` (`Id`, `Email`, `Pregunta`, `Respuesta correcta`, `Respuesta incorrecta 1`, `Respuesta incorrecta 2`, `Respuesta incorrecta 3`, `Dificultad`, `Tema`) VALUES(NULL, '$_GET[email]','$_GET[pregunta]','$_GET[respuesta]','$_GET[respuesta1]','$_GET[respuesta2]','$_GET[respuesta3]','$_GET[dificultad]','$_GET[tema]')";
 		if (!mysqli_query($link ,$sql))
 		{
