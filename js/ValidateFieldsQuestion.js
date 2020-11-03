@@ -36,7 +36,7 @@ if($tema == ''){
 }
 var regular = /[a-z]{2,}[0-9]{3,3}@ikasle.ehu.eu{0,1}s/;
 
-var regularProfe = /[a-z]{2,}.[a-z]{2,}@ehu.eu{0,1}s/;
+var regularProfe = /[a-z]{2,}\.[a-z]{2,}@ehu.eu{0,1}s/;
 var regularProfe2 = /[a-z]{2,}@ehu.eu{0,1}s/;
 if (regular.test($email)){
 	return true;

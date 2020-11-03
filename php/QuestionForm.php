@@ -11,7 +11,7 @@
     <div>
 
       <p>Introduce los datos de la pregunta a añadir</p>
-      <form id='fquestion' name='fquestion' action="AddQuestion.php" onsubmit="return patata();">
+      <form id='fquestion' name='fquestion' action="AddQuestion.php" on-submit="return patata();">
 			<p>Email *</p>
 			<input id="email" name="email" type="text">
 			<p>Enunciado de la pregunta *</p>
