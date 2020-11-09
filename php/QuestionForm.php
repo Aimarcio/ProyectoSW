@@ -1,42 +1,75 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <?php include '../html/Head.html'?>
-  <script src="../js/jquery-3.4.1.min.js"></script>
-    <script src="../js/ValidateFieldsQuestion.js"></script>	
+	<?php include '../html/Head.html'?>
+	<script src="../js/jquery-3.4.1.min.js"></script>
+  	<!--<script src="../js/ShowImageInForm.js"></script>-->
+  	<script src="../js/ValidateFieldsQuestion.js"></script>
+	<style>
+		.table_QuestionForm {
+			margin: auto;
+		}
+		sup {
+			color: red;
+		}
+	</style>
 </head>
+
 <body>
-  <?php include '../php/Menus.php' ?>
-  <section class="main" id="s1">
-    <div>
+	<?php include '../php/Menus.php' ?>
+	<section class="main" id="s1">
+		<div>
 
-      <p>Introduce los datos de la pregunta a añadir</p>
-      <form id='fquestion' name='fquestion' action="AddQuestion.php" on-submit="return patata();">
-			<p>Email *</p>
-			<input id="email" name="email" type="text">
-			<p>Enunciado de la pregunta *</p>
-			<input id='pregunta' name="pregunta" type='text'>
-			<p>Respuesta correcta *</p>
-			<input id='respuesta' name="respuesta" type='text'>
-			<p>Respuesta incorrecta 1 *</p>
-			<input id='respuesta1' name="respuesta1" type='text'>
-			<p>Respuesta incorrecta 2 *</p>
-			<input id='respuesta2' name="respuesta2" type='text'>
-			<p>Respuesta incorrecta 3 *</p>
-			<input id='respuesta3' name="respuesta3" type='text'>
-			<p>Dificultad de la pregunta *</p>
-			<select id='dificultad' name="dificultad">
-				<option value='1'>Baja</option>
-				<option value='2'>Media</option>
-				<option value='3'>Alta</option>
-			</select>
-			<p>Tema *</p>
-			<input id='tema' type='text' name="tema">
-			<input type='submit' value="Enviar" id="submitted"/>
-		</form>
+			<!--Añadir el formulario y los scripts necesarios para que el usuario<br>pueda introducir los datos de una pregunta sin imagen.-->
+			<!--<form id='fquestion' name='fquestion' action=’AddQuestion.php’>  GET porque no envia imagen-->
+			<form id='fquestion' name='fquestion' method="GET" action='prueba.php'>
+				<table class="table_QuestionForm">
+					<tr>
+						<th>
+							<h2>Insertar pregunta</h2><br />
+						</th>
+					</tr>
+					<tr>
+						<td>Direccion de correo<sup>*</sup> <input type="text" size="50" id="dirCorreo" name="Direccion de correo"></td>
+					</tr>
+					<tr>
+						<td>Enunciado de pregunta<sup>*</sup> <input type="text" size="75" id="pregunta" name="Pregunta"></td>
+					</tr>
+					<tr>
+						<td>Respuesta correcta<sup>*</sup> <input type="text" size="75" id="respuestaCorrecta" name="Respuesta correcta"></td>
+					</tr>
+					<tr>
+						<td>Respuesta incorrecta 1<sup>*</sup> <input type="text" size="75" id="respuestaIncorrecta1" name="Respuesta incorrecta 1"></td>
+					</tr>
+					<tr>
+						<td>Respuesta incorrecta 2<sup>*</sup> <input type="text" size="75" id="respuestaIncorrecta2" name="Respuesta incorrecta 2"></td>
+					</tr>
+					<tr>
+						<td>Respuesta incorrecta 3<sup>*</sup> <input type="text" size="75" id="respuestaIncorrecta3" name="Respuesta incorrecta 3"></td>
+					</tr>
+					<tr>
+						<td>Tema<sup>*</sup> <input type="text" size="50" id="tema" name="tema"></td>
+					</tr>
+					<tr>
+						<td>
+							Complejidad<sup>*</sup>
+							<select id="complejidad" name="complejidad">
+								<option value="1">Baja</option>
+								<option value="2" selected>Media</option>
+								<option value="3">Alta</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td><input type="submit" id="submit" value="Enviar"> <input type="reset" id="reset" value="Limpiar"></td>
+					</tr>
+				</table>
+			</form>
 
-    </div>
-  </section>
-  <?php include '../html/Footer.html' ?>
+		</div>
+	</section>
+	<?php include '../html/Footer.html' ?>
 </body>
+
 </html>

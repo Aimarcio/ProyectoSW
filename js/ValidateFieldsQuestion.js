@@ -1,54 +1,40 @@
-function patata(){
-var form = $('#fquestion');
-var $email = $("#email").val();
-var $pregunta = $('#pregunta').val();
-var $respuesta = $('#respuesta').val();
-var $respuesta1 = $('#respuesta1').val();
-var $respuesta2 = $('#respuesta2').val();
-var $respuesta3 = $('#respuesta3').val();
-var $dificultad = $('#dificultad').val();
-var $tema = $('#tema').val();
-if($email.length<1){
-	alert("Introduce un valor en el email");
-        return false;
-}
-if($pregunta.length<1){
-	alert('Introduce un valor en el pregunta');
-        return false;
-}
-if($respuesta == ''){
-	alert('Introduce un valor en el respuesta');
-        return false;
-}if($respuesta1 == ''){
-	alert('Introduce un valor en el respuesta 1');
-        return false;
-}
-if($respuesta2 == ''){
-	alert('Introduce un valor en el respuesta 2');
-        return false;
-}if($respuesta3 == ''){
-	alert('Introduce un valor en el respuesta 3');
-        return false;
-}
-if($tema == ''){
-	alert('Introduce un valor en el tema');
-        return false;
-}
-var regular = /[a-z]{2,}[0-9]{3,3}@ikasle.ehu.eu{0,1}s/;
+function validarCorreo(correo) {
 
-var regularProfe = /[a-z]{2,}\.[a-z]{2,}@ehu.eu{0,1}s/;
-var regularProfe2 = /[a-z]{2,}@ehu.eu{0,1}s/;
-if (regular.test($email)){
-	return true;
-}
-if (regularProfe.test($email)){
-	return true;
-}
-if (regularProfe2.test($email)){
-	return true;
-}
-alert("Introduce un email valido");
-return false;
+    var correoAlumno = /^[a-zA-Z]+(([0-9]{3})+@ikasle\.ehu\.(eus|es))$/;
+    var correoProfesor = /^[a-zA-Z]+(\.[a-zA-Z]+@ehu\.(eus|es)|@ehu\.(eus|es))$/;
 
+    if (correoAlumno.test(correo) || correoProfesor.test(correo))
+        return true;
+    else
+        return false;
 }
-	
+
+function validarFormulario() {
+
+    if($('#dirCorreo').val()=="" ||
+    $('#pregunta').val()=="" ||
+    $('#respuestaCorrecta').val()=="" ||
+    $('#respuestaIncorrecta1').val()=="" ||
+    $('#respuestaIncorrecta2').val()=="" ||
+    $('#respuestaIncorrecta3').val()=="" ||
+    $('#tema').val()=="" ) {
+        alert("¡Complete todos los campos obligatorios (*)!");
+        return false;
+    } else if (!validarCorreo($('#dirCorreo').val())) {
+        alert("¡Formato de correo electronico invalido!");
+        return false;
+    } else if ($('#pregunta').val().length < 10) {
+        alert("¡Se necesita pregunta con longitud minima de 10 caracteres!");
+        return false;
+    } else {
+        return true;
+    }
+}
+
+$(document).ready(function () {
+    $('#submit').click(function () {
+        return validarFormulario();
+    });
+});
+
+// El boton reset (input type="reset") no necesita funcion de atencion, ya que por defecto resetea el form

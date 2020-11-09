@@ -1,59 +1,63 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <?php include '../html/Head.html'?>
+  <?php include '../html/Head.html' ?>
 </head>
+
 <body>
   <?php include '../php/Menus.php' ?>
+  <?php include '../php/DbConfig.php' ?>
   <section class="main" id="s1">
     <div>
-
-		<?php
-		if(empty($_GET["email"])){
-			die('Error: Email vacio');
+      <!--Código PHP para añadir una pregunta sin imagen-->
+      <br/>
+      <?php
+        // Realizar conexion php
+        $mysqli = mysqli_connect($server, $user, $pass, $basededatos);
+        if (!$mysqli) {
+          die("Fallo al conectar a MySQL: " . mysqli_connect_error());
+        }
+        // Operar
+        // echo "Connection OK.";
+        $sql = "INSERT INTO preguntas(email, enunciado, respuestac, respuestai1, respuestai2, respuestai3, complejidad, tema) VALUES('$_REQUEST[Direccion_de_correo]', '$_REQUEST[Pregunta]', '$_REQUEST[Respuesta_correcta]', '$_REQUEST[Respuesta_incorrecta_1]', '$_REQUEST[Respuesta_incorrecta_2]', '$_REQUEST[Respuesta_incorrecta_3]', '$_REQUEST[complejidad]', '$_REQUEST[tema]');";
+        if(!mysqli_query($mysqli, $sql)) {
+          die("Fallo al insertar en la BD: " . mysqli_error($mysqli));
+        }
+        echo "Pregunta guardada en la BD";
+        // Cerrar conexión
+        !mysqli_close($mysqli);
+        // echo "Close OK.";
+		
+		
+		
+		//XML
+		$xml = simplexml_load_file('../xml/Questions.xml');
+		$assessmentItem = $xml->addChild('assessmentItem');
+		$assessmentItem->addAttribute('subject',$_REQUEST['tema']);
+		$assessmentItem->addAttribute('author', $_REQUEST['Direccion_de_correo']);
+		$itemBody = $assessmentItem->addChild('itemBody');
+		$itemBody->addChild('p',$_REQUEST['Pregunta']);
+		
+		$correctResponse = $assessmentItem->addChild('correctResponse');
+		$correctResponse->addChild('response',$_REQUEST['Respuesta_correcta']);
+		
+		$incorrectResponse = $assessmentItem->addChild('incorrectResponse');
+		$incorrectResponse->addChild('response',$_REQUEST['Respuesta_incorrecta_1']);
+		$incorrectResponse->addChild('response',$_REQUEST['Respuesta_incorrecta_2']);
+		$incorrectResponse->addChild('response',$_REQUEST['Respuesta_incorrecta_3']);
+		if($xml->asXML()){
+			echo '<p>Se ha guardado correctamente en XML</p>';
+		} else{
+			echo '<p>No se ha podido guardar en XML</p>';
 		}
-		$email = $_GET["email"];
-		if(preg_match("/[a-z]{2,}[0-9]{3,3}@ikasle\.ehu\.eu{0,1}s/",$email)!==1 && preg_match("/[a-z]{2,}\.[a-z]{2,}@ehu\.eu{0,1}s/",$email)!==1 && preg_match("/[a-z]{2,}@ehu\.eu{0,1}s/",$email)!==1){
-			die('Error: Email no valido');
-		}
-		if(empty($_GET["pregunta"])){
-			die('Error: Pregunta vacia');
-		}
-		if(empty($_GET["respuesta"])){
-			die('Error: Respuesta/s vacia/s');
-		}
-		if(empty($_GET["respuesta1"])){
-			die('Error: Respuesta/s vacia/s');
-		}
-		if(empty($_GET["respuesta2"])){
-			die('Error: Respuesta/s vacia/s');
-
-		}
-		if(empty($_GET["respuesta3"])){
-			die('Error: Respuesta/s vacia/s');
-			
-		}
-		if(empty($_GET["tema"])){
-			die('Error: Tema vacio');
-			
-		}
-		if(empty($_GET["dificultad"])){
-			die('Error: Dificultad vacia');
-			
-		}
-		$link = mysqli_connect("localhost", "id14879003_aimarcio", "", "id14879003_quiz");
-		$sql="INSERT INTO `preguntas` (`Id`, `Email`, `Pregunta`, `Respuesta correcta`, `Respuesta incorrecta 1`, `Respuesta incorrecta 2`, `Respuesta incorrecta 3`, `Dificultad`, `Tema`) VALUES(NULL, '$_GET[email]','$_GET[pregunta]','$_GET[respuesta]','$_GET[respuesta1]','$_GET[respuesta2]','$_GET[respuesta3]','$_GET[dificultad]','$_GET[tema]')";
-		if (!mysqli_query($link ,$sql))
-		{
-			die('Error: ' . mysqli_error($link));
-		}
-		echo "1 record added";
-		mysqli_close($link);
-		?>
-
-
+		$xml->asXML('../xml/Questions.xml');
+      ?>
+      <br/>
+      <span><a href='ShowQuestions.php'>Ver preguntas de la BD</a></span>
     </div>
   </section>
   <?php include '../html/Footer.html' ?>
 </body>
+
 </html>

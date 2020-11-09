@@ -1,12 +1,26 @@
-<!DOCTYPE html>
+
 <html>
 <head>
+  <?php include '../html/Head.html'?>
+  <style>
+    .error {
+        color: darkred;
+    }
+    .success {
+        color: darkgreen;
+    }
+  </style>
 </head>
 <body>
-<a href="Layout.php">Volver</a>
+  <?php include '../php/Menus.php' ?>
+  <section class="main" id="s1">
+    <div>
+        <?php
+          echo "<script> alert(\"¡Hasta pronto!\"); document.location.href='Layout.php'; </script>";
+        ?>
+    </div>
+  </section>
+  <?php include '../html/Footer.html' ?>
 </body>
 </html>
-<?php
-echo("<script> alert ('Hasta otra!')</script>");
-return;
-?>
+
