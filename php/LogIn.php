@@ -1,3 +1,4 @@
+<?php session_start()?>
 <html>
 
 <head>
@@ -56,12 +57,18 @@
             echo "<span><a href='javascript:history.back()'>Volver</a></span>";
           }
           $row = mysqli_fetch_array($resultado);
-          if(!empty($row) && $row['email']==$email && hash_equals($row['pass'], crypt($pass1, $row['pass']))){
+          if(!empty($row) && $row['estado'] =='activar' && $row['email']==$email && hash_equals($row['pass'], crypt($pass1, $row['pass']))){
             // echo "<p class=\"success\">Inicio de sesion realizado correctamente<p><br/>";
             // echo "<span><a href='Layout.php'>Ir al inicio</a></span>";
-            echo "<script> alert(\"¡Bienvenido!\"); document.location.href='Layout.php?logInMail=$email'; </script>";
+            $_SESSION['Rol'] = $row['Rol'];
+            $_SESSION['Email'] = $row['email'];
+            $_SESSION['Image'] = $row['imagen'];
+            echo "<script> alert(\"¡Bienvenido!\"); document.location.href='Layout.php'; </script>";
 					} else {
-            echo "<p class=\"error\">Usuario o contraseña incorrectos!<p><br/>";
+            if($row['estado'] != 'activar'){
+              echo "<p class=\"error\">Cuenta bloqueada!<p><br/>";
+            }else{
+            echo "<p class=\"error\">Usuario o contraseña incorrectos!<p><br/>";}
             // echo "<span><a href=\"javascript:history.back()\">Volver</a></span>";
           }
         }

@@ -1,9 +1,15 @@
+<?php session_start();
+if(isset($_SESSION['Rol'])){
+    header('location: Layout.php');
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
     <?php include '../html/Head.html'?>
     <script src="../js/jquery-3.4.1.min.js"></script>
     <script src="../js/ShowImageInForm.js"></script>
+    <script src="../js/AjaxServices.js"></script>
     <style>
 		.table_fregister {
 			margin: auto;
@@ -34,16 +40,18 @@
                         <tr>
                             <td>Tipo de usuario<sup>*</sup>
                             <select id="tipoUsu" name="tipoUsu">
-                                <option value="1"selected>Alumno</option>
-                                <option value="2">Profesor</option>
+                                <option value="Estudiante"selected>Alumno</option>
+                                <option value="Profesor">Profesor</option>
                             </select>
                         </tr>
-                        <tr><td>Dirección de correo<sup>*</sup> <input type="email" size="75" id="dirCorreo" name="dirCorreo"></td></tr>
+                        <tr><td>Dirección de correo<sup>*</sup> <input type="email" size="75" id="dirCorreo" name="dirCorreo" onchange="preguntarEmail()"></td></tr>
+                        <tr><td><div id="respuesta"></div></td></tr>
                         <tr><td>Nombre y apellido(s)<sup>*</sup> <input type="text" size="75" id="nAp" name="nAp"></td></tr>
-                        <tr><td>Contraseña (long>5)<sup>*</sup> <input type="password" size="75" id="pass1" name="pass1"></td></tr>
+                        <tr><td>Contraseña (long>5)<sup>*</sup> <input type="password" size="75" id="pass1" name="pass1" onchange="preguntarContrasena()"></td></tr>
+                        <tr><td><div id="r"></div></td></tr>
                         <tr><td>Repite la contraseña<sup>*</sup> <input type="password" size="75" id="pass2" name="pass2"></td></tr>
                         <tr><td>Foto de perfil (opc) <input type="file" id="file" accept="image/*" name="file"><div id="imgDynamica"></div></td></tr>
-                        <tr><td><input type="submit" id="submit" value="Enviar"> <input type="reset" id="reset" value="Limpiar"></td></tr>
+                        <tr><td><input type="submit" id="submit" value="Enviar" disabled> <input type="reset" id="reset" value="Limpiar"></td></tr>
                     </table>
                 </form>
             </div>  
@@ -75,10 +83,10 @@
                         } else if(empty($tipo) || empty($mail) || empty($nAp) || empty($pass1) || empty($pass2)) {
                             echo "<p class=\"error\">¡Complete todos los campos obligatorios (*)!<p><br/>";
                             // echo "<span><a href='javascript:history.back()'>Volver al formulario</a></span>";
-                        } else if(!preg_match($exprMail, $mail)) {
+                        }else if(!preg_match($exprMail, $mail)) {
                             echo "<p class=\"error\">¡Formato de correo electronico invalido!<p><br/>";
                             // echo "<span><a href='javascript:history.back()'>Volver al formulario</a></span>";
-                        } else if((preg_match($exprMailAlu, $mail) && $tipo!="1") || (preg_match($exprMailProf, $mail) && $tipo!="2")) {
+                        } else if((preg_match($exprMailAlu, $mail) && $tipo!="Estudiante") || (preg_match($exprMailProf, $mail) && $tipo!="Profesor")) {
                             echo "<p class=\"error\">¡Formato de correo incorrecto para el tipo de usuario seleccionado!<p><br/>";
                             // echo "<span><a href='javascript:history.back()'>Volver al formulario</a></span>";
                         } else if(!preg_match($exprNAP, $nAp)) {
@@ -101,7 +109,7 @@
                                 $imagen = "../images/anonimo.jpg";
                             }
                             $imagen_b64 = base64_encode(file_get_contents($imagen));
-                            $sql = "INSERT INTO usuarios(tipousu, email, nomap, pass, imagen) VALUES ('$tipo', '$mail', '$nAp', '$pass', '$imagen_b64');";
+                            $sql = "INSERT INTO usuarios(email, nomap, pass, imagen, Rol) VALUES ('$mail', '$nAp', '$pass', '$imagen_b64', '$tipo' );";
                             if(!mysqli_query($mysqli, $sql)) {
                                 die("Fallo al insertar en la BD: " . mysqli_error($mysqli));
                                 echo "<span><a href='javascript:history.back()'>Volver al formulario</a></span>";

@@ -10,7 +10,10 @@
 <header class='main' id='h1'>
   <span id="registro"><a href="SignUp.php">Registro</a></span>
   <span id="login" ><a href="LogIn.php">Login</a></span>
+  <?php if(isset($_SESSION['Email'])){echo $_SESSION['Email'];} ?>
+  <?php if(isset($_SESSION['Image']) && $_SESSION['Image']!=null ){echo '<img height=60px width="55px" src="data:image/png;base64,'.$_SESSION['Image'].'"/>';} ?>
   <span id="logout" ><a href="LogOut.php">Logout</a></span>
+  
   <!--<span id="logout" class="right" style="display:none;"><a href="/logout">Logout</a></span>-->
 </header>
 <nav class='main' id='n1' role='navigation'>
@@ -22,22 +25,19 @@
   <!--<span><a href='ShowQuestions.php'>Ver preguntas BD</a></span>-->
   <!--<span><a href='prueba.php'>DebugPHP</a></span>-->
   <?php
-    if(isset($_REQUEST['logInMail'])) {
-      $logInMail = $_REQUEST['logInMail'];
-      echo "<span id='inicio'><a id='ini' href='Layout.php?logInMail=$logInMail'>Inicio</a></span>";
-      echo "<span id='insertar'><a id='ins' href='QuestionFormWithImage.php?logInMail=$logInMail'>Insertar pregunta</a></span>";
-      echo "<span id='creditos'> <a id='cre' href='Credits.php?logInMail=$logInMail'> Creditos </a> </span>";
-      echo "<span id='verBD'> <a id='ver' href='ShowQuestionsWithImage.php?logInMail=$logInMail'> Ver preguntas BD </a> </span>";
-	  echo "<span id='verXML'> <a id='verXML' href='ShowXMLQuestions.php?logInMail=$logInMail'> Ver preguntas XML </a> </span>";
-      echo "<script> $(\"#h1\").append(\"<p>$logInMail</p>\"); </script>";
+    if(isset($_SESSION['Rol'])) {
+      echo "<span id='inicio'><a id='ini' href='Layout.php'>Inicio</a></span>";
+      if($_SESSION['Rol']!='Admin'){
+        echo "<span id='QuizAjax'> <a id='QuizAjax' href='HandlingQuizesAjax.php'>HandlingQuizesAjax</a> </span>";
+      } else{
+        echo "<span id='HandlingAcc'> <a id='HandlingAcc' href='HandlingAccounts.php'>HandlingAccounts</a> </span>";
+      }
+      echo "<span id='creditos'> <a id='cre' href='Credits.php'> Creditos </a> </span>";
       //echo "<script> $(\"#h1\").append(\"<img/>\");";
       echo "<script> showOnLogIn(); </script>";
     } else {
       echo "<span id='inicio'><a id='ini' href='Layout.php'>Inicio</a></span>";
-      echo "<span id='insertar'><a id='ins' href='QuestionFormWithImage.php'>Insertar pregunta</a></span>";
       echo "<span id='creditos'> <a id='cre' href='Credits.php'> Creditos </a> </span>";
-      echo "<span id='verBD'> <a id='ver' href='ShowQuestionsWithImage.php'> Ver preguntas BD </a> </span>";
-	  //echo "<span id='verXML'> <a id='verXML' href='ShowXMLQuestions.php'> Ver preguntas XML </a> </span>";
       echo "<script> showOnNotLogIn(); </script>";
     }
 
