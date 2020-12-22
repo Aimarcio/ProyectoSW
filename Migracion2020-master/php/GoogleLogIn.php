@@ -1,0 +1,10 @@
+<?php
+    session_start();
+    if(isset($_SESSION['Email'])){
+        die();
+    }
+    $_SESSION['Email']=$_POST['email'];
+    $_SESSION['Image']=base64_encode(file_get_contents($_POST['image']));
+    $_SESSION['Rol']="Estudiante";
+    $_SESSION['platform']="google";
+?>
